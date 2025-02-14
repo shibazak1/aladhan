@@ -1,5 +1,6 @@
 
 
+
 {
     "name": "AL Adhan",
     "short_name": "AL Adhan",
@@ -7,17 +8,16 @@
     "display": "standalone",
     "theme_color": "#40414F",
     "background_color": "#40414F",
-
     "icons": [
-	{
-	    "src": "./greatewave_192x192.png",
-	    "sizes": "192x192",
-	    "type": "image/png"
-	},
-	{
-	    "src": "./greatewave_144x144.png",
-	    "sizes": "144x144",
-	    "type": "image/png"
-	}
+        {
+            "src": "./greatewave_192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "./greatewave_144x144.png",
+            "sizes": "144x144",
+            "type": "image/png"
+        }
     ]
 }
