@@ -1,52 +1,99 @@
 
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-
   
-
-  <title>Home Page</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   
+  <link rel="manifest" href="/manifest.json">
+  <title>Prayer Times</title>
+
+  <style>
+    body {
+      background-color: #f8f9fa;
+      font-family: Arial, sans-serif;
+    }
+
+    .navbar {
+      background-color: #40414F  !important;
+    }
+    
+    .navbar-brand {
+      color: white !important;
+      font-weight: bold;
+    }
+
+    .prayer-card {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 15px;
+      margin-bottom: 15px;
+    }
+
+    .remain-time {
+      background: #40414F ;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 20px;
+      display: inline-block;
+      font-size: 1.2rem;
+    }
+  </style>
 </head>
 <body>
-  <header>
-  </header>
 
-  <main>
-    <nav class="navbar bg-body-tertiary">
-      <div class="container-fluid">
-	<!-- West Date on the left -->
-	<span class="navbar-brand west-date">West Date : </span>
-	
-	<!-- Hijri Date on the right -->
-	<span class="navbar-brand hijri-date ms-auto">Hijri Date : </span>
-      </div>
-    </nav>
+  <!-- Navigation Bar -->
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+      
+      <p class="fw-lighter">
+	<span class="navbar-brand"> West Date: <span class="west-date"></span></span>
+	<span class="navbar-brand ms-auto"> Hijri Date: <span class="hijri-date"></span></span>
+      </p>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="container mt-4">
     
-    <div class="d-flex justify-content-center">
-      <div class="container-xxl" style="margin:20px;">
-	<!-- Prayer Times Table -->
-	<ul id="adhan-list" class="list-group">
-      <!-- Prayer times will be dynamically inserted here -->
-	</ul>
-	
-	<!-- Remaining Time -->
-	<div class="text-center mt-4">
-	  <span class="remain-time roanded-pill h4"></span>
-	</div>
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        
+        <!-- Prayer Times List -->
+        <ul id="adhan-list" class="list-group">
+          <!-- Prayer times will be dynamically inserted here -->
+        </ul>
+
+        <!-- Remaining Time -->
+        <div class="text-center mt-4">
+          <span class="remain-time"> Remaining Time: --</span>
+        </div>
+        
       </div>
     </div>
 
   </main>
-  
-  <footer>
+
+  <footer class="text-center py-3 mt-5 bg-light">
+    <p class="mb-0">Enjoy Praying</p>
   </footer>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js')
+        .then(function(registration) {
+          console.log('Service Worker registered with scope:', registration.scope);
+        })
+        .catch(function(error) {
+          console.log('Service Worker registration failed:', error);
+        });
+    }
+  </script>
+
   <script src="aladhan_time.js"></script>
 </body>
 </html>
