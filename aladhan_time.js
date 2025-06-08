@@ -2,15 +2,18 @@
 let city = 'Benghazi';
 let country ='LY' ;
 let salah_data;
+let salah;
 let date,dateHijri;
 let moaqeatHtml;
+let comingSalah;
 
-const url = `https://api.aladhan.com/v1/timingsByAddress?address=${city},${country}&method=5`
+const url = `https://api.aladhan.com/v1/timingsByAddress?address=${city},${country}&method=5`;
 //const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
 const proxyUrl = 'https://api.allorigins.win/get?url=';
 
 
 document.addEventListener('DOMContentLoaded',()=>{
+    
     getAdhanTime();
 
     document.addEventListener('click',(e)=>{
@@ -103,24 +106,34 @@ function getAdhanTime(){
 
 	    date = json_data.data.date.readable;
 	    dateHijri = json_data.data.date.hijri.date;
+
+	    document.querySelector('.time').innerHTML = dateHijri;
 	    
 	    let newItem;
-	    let list = document.getElementById('adhan-list');
-	    const salah = json_data.data.timings;
+	    //let list = document.getElementById('adhan-list');
+	    let list = document.querySelector('.prayer-card');
+	    salah = json_data.data.timings;
 	    Object.keys(salah).forEach((adhan)=>{
-		newItem = `
+		/*newItem = `
 
     <li class="list-group-item d-flex justify-content-between align-items-center adhan">
       ${adhan}
       <span class="badge bg-primary rounded-pill ">${salah[adhan]}</span>
     </li>
     `;
-		
+		*/
+		newItem = `<div class="prayer-item"><span>${adhan}</span><span>${salah[adhan]}</span></div>`;
 
 		list.insertAdjacentHTML('beforeend',newItem);
 		console.log(salah[adhan]);
 	    });
 
+	    //call remaining time function
+	    comingSalah = upComingSalah();
+	    calcRemainTime();
+	    setInterval(calcRemainTime, 1000);
+
+	    //end
 	    moaqeatHtml = document.querySelector('.moageat-page');
 	    
 	})
@@ -129,11 +142,49 @@ function getAdhanTime(){
 	})
 }
 
+function upComingSalah() {
+
+    let nowDate = new Date();
+    
+    let hourNow = nowDate.getHours();
+    let minuteNow = nowDate.getMinutes();
+
+    for(const [name,time] of Object.entries(salah)){
+	
+	let adhanTime = time;
+	
+	let adhanTimeHours = Number(adhanTime.slice(0, 2));
+	let adhanTimeMinutes = Number(adhanTime.slice(3));
+
+	let adhanTimeInMin = adhanTimeHours * 60 + adhanTimeMinutes;
+	let nowTimeInMinutes = hourNow * 60 + minuteNow;
 
 
-function calcRemainTime(item) {
+
+	//this loop check of the salah passed or not the 1st one that are not passed return it it is the 1st upcoming one
+	if(adhanTimeInMin >= nowTimeInMinutes){
+	    document.querySelector('.salah-name').innerHTML = name;
+	    console.log("name",name);
+	    return adhanTime;
+	}
+	
+	
+	
+    }
+
+    //if all salah for the day passed return the 1st one in the next time
+    return Object.values(salah)[0];
+
+
+    
+}
+
+
+
+function calcRemainTime() {
     // Get the salah time from the item
-    let salahTime = item.querySelector('span').textContent;
+    //let salahTime = item.querySelector('span').textContent;
+    let salahTime = comingSalah;
 
     // Get the current time
     let nowDate = new Date();
@@ -145,7 +196,7 @@ function calcRemainTime(item) {
     // Get current hours and minutes
     let hourNow = nowDate.getHours();
     let minuteNow = nowDate.getMinutes();
-
+    let secNow = nowDate.getSeconds();
     // Convert both times to total minutes
     let salahTimeInMinutes = salahTimeHours * 60 + salahTimeMinutes;
     let nowTimeInMinutes = hourNow * 60 + minuteNow;
@@ -161,13 +212,36 @@ function calcRemainTime(item) {
     // Convert the difference back to hours and minutes
     let diffHours = Math.floor(diffInMinutes / 60);
     let diffMinutes = diffInMinutes % 60;
+    let diffSec = 59 - secNow;
 
     // Display the remaining time
-    let leftOrRightTime = `${diffHours} H , ${diffMinutes} M`;
+    let leftOrRightTime = `${diffHours} : ${diffMinutes} : ${diffSec}`;
     document.querySelector('.remain-time').innerHTML = leftOrRightTime;
 
     // Log the current time for debugging
     console.log(`Current Time: ${hourNow}:${minuteNow}`);
     console.log(`Remaining Time: ${leftOrRightTime}`);
+
+
+    
+    // call the count down
+    //
 }
+
+ 
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
 
