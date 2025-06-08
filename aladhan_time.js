@@ -130,7 +130,7 @@ function getAdhanTime(){
 
 	    //call remaining time function
 	    comingSalah = upComingSalah();
-	    calcRemainTime();
+	    //calcRemainTime();
 	    setInterval(calcRemainTime, 1000);
 
 	    //end
@@ -144,6 +144,7 @@ function getAdhanTime(){
 
 function upComingSalah() {
 
+    console.log("i am in ");
     let nowDate = new Date();
     
     let hourNow = nowDate.getHours();
@@ -163,8 +164,8 @@ function upComingSalah() {
 
 	//this loop check of the salah passed or not the 1st one that are not passed return it it is the 1st upcoming one
 	if(adhanTimeInMin >= nowTimeInMinutes){
+	    
 	    document.querySelector('.salah-name').innerHTML = name;
-	    console.log("name",name);
 	    return adhanTime;
 	}
 	
@@ -173,7 +174,9 @@ function upComingSalah() {
     }
 
     //if all salah for the day passed return the 1st one in the next time
+    //document.querySelector('.salah-name').innerHTML = Object.values(salah);
     return Object.values(salah)[0];
+    
 
 
     
