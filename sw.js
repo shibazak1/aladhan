@@ -49,7 +49,7 @@ function cacheFirstWithRefresh(request){
 	})
 	.catch((error)=>{
 	    if(request.method == 'GET' && request.headers.get('accept').includes('text/html')){
-		return caches.match('ads3/offline');
+		return caches.match('offline');
 	    }
 
 	});
