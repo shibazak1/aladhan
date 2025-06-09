@@ -10,11 +10,24 @@ self.addEventListener('install', (event) => {
     event.waitUntil(
 	caches.open(cacheName).then(function (cache){
 	    cache.addAll([
-		'offline.html',
+		'/offline.html',
+		'/anime_144x144.png',
 	    ]);
 	})
     );
 });
+
+
+self.addEventListener("message", (event) => {
+    if (event.data.action === "SHOW_NOTIFICATION") {
+	self.registration.showNotification("Offline Alert!", {
+	    body: "This works even without internet!",
+	    icon: "/anime_144x144.png", // Make sure this icon is cached
+	});
+    }
+});
+
+
 
 self.addEventListener('fetch', (event) => {
     console.log('Fetching:', event.request.url);
