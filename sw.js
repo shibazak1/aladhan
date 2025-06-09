@@ -20,8 +20,9 @@ self.addEventListener('install', (event) => {
 
 self.addEventListener("message", (event) => {
     if (event.data.action === "SHOW_NOTIFICATION") {
+	console.log("notification come");
 	self.registration.showNotification("Offline Alert!", {
-	    body: "This works even without internet!",
+	    body: event.data.body,
 	    icon: "/anime_144x144.png", // Make sure this icon is cached
 	});
     }

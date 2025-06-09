@@ -6,6 +6,7 @@ let salah;
 let date,dateHijri;
 let moaqeatHtml;
 let comingSalah;
+let salahName;
 
 const url = `https://api.aladhan.com/v1/timingsByAddress?address=${city},${country}&method=5`;
 //const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
@@ -164,7 +165,7 @@ function upComingSalah() {
 
 	//this loop check of the salah passed or not the 1st one that are not passed return it it is the 1st upcoming one
 	if(adhanTimeInMin >= nowTimeInMinutes){
-	    
+	    salahName = name;
 	    document.querySelector('.salah-name').innerHTML = name;
 	    return adhanTime;
 	}
@@ -212,6 +213,11 @@ function calcRemainTime() {
     // Calculate the absolute difference in minutes
     let diffInMinutes = Math.abs(salahTimeInMinutes - nowTimeInMinutes);
 
+    if(diffInMinutes == 5){
+	showNotification();
+    }
+    
+
     // Convert the difference back to hours and minutes
     let diffHours = Math.floor(diffInMinutes / 60);
     let diffMinutes = diffInMinutes % 60;
@@ -222,8 +228,8 @@ function calcRemainTime() {
     document.querySelector('.remain-time').innerHTML = leftOrRightTime;
 
     // Log the current time for debugging
-    console.log(`Current Time: ${hourNow}:${minuteNow}`);
-    console.log(`Remaining Time: ${leftOrRightTime}`);
+    //console.log(`Current Time: ${hourNow}:${minuteNow}`);
+    //console.log(`Remaining Time: ${leftOrRightTime}`);
 
 
     
@@ -232,7 +238,18 @@ function calcRemainTime() {
 }
 
  
+function showNotification(){
 
+    if (navigator.serviceWorker.controller) {
+	console.log("notification go");
+	
+	navigator.serviceWorker.controller.postMessage({
+	    action: "SHOW_NOTIFICATION",
+	    body:`5 Minutes Remain On ${salahName}`,
+	});
+    }
+    
+}
  
 
 

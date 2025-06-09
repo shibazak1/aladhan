@@ -13,11 +13,14 @@ document.addEventListener("click", () => {
 });
 
 
-
+/*
 setTimeout(() => {
-  if (navigator.serviceWorker.controller) {
-    navigator.serviceWorker.controller.postMessage({
-      action: "SHOW_NOTIFICATION"
-    });
-  }
+    if (navigator.serviceWorker.controller) {
+	console.log("notification go");
+	
+	navigator.serviceWorker.controller.postMessage({
+	    action: "SHOW_NOTIFICATION"
+	});
+    }
 }, 5000); // Show after 5 seconds (even offline)
+*/
