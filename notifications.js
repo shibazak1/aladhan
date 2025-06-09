@@ -5,9 +5,19 @@
 document.addEventListener("click", () => {
   if ("Notification" in window) {
     Notification.requestPermission().then(permission => {
-      if (permission === "granted") {
-        console.log("Notification permission granted!");
-      }
+	if (permission === "granted") {
+	    
+	    if (navigator.serviceWorker.controller) {
+		console.log("notification go");
+		
+		navigator.serviceWorker.controller.postMessage({
+		    action: "SHOW_NOTIFICATION",
+		    body:`Thank You For Accepting Our Notifications`,
+		});
+	    }
+	    
+            console.log("Notification permission granted!");
+	}
     });
   }
 });
