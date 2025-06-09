@@ -21,7 +21,7 @@ self.addEventListener('install', (event) => {
 self.addEventListener("message", (event) => {
     if (event.data.action === "SHOW_NOTIFICATION") {
 	console.log("notification come");
-	self.registration.showNotification("Offline Alert!", {
+	self.registration.showNotification("Adhan Alert!!", {
 	    body: event.data.body,
 	    icon: "/anime_144x144.png", // Make sure this icon is cached
 	});
