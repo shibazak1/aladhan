@@ -1,34 +1,32 @@
+
+
 {
-  "name": "Waabdu",
-  "short_name": "Waabdu",
-  "start_url": "./index.html",
-  "display": "standalone",
-  "theme_color": "#40414F",
-  "background_color": "#40414F",
-  "icons": [
-    {
-      "src": "/icon-192x192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/icon-192x192.maskable.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "maskable"
-    },
-    {
-      "src": "/icon-512x512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/icon-512x512.maskable.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable"
-    }
-  ]
+    "name": "Waandu",
+    "short_name": "Waabdu",
+    "start_url": "./index.html",
+    "display": "standalone",
+    "theme_color":"#40414F",
+    "background_color":"#40414F",
+    "icons": [
+	{
+	    "src": "./anime_192x192.png",
+	    "sizes": "192x192",
+	    "type": "image/png"
+	},
+	{
+	    "src": "./anime_144x144.png",
+	    "sizes": "144x144",
+	    "type": "image/png"
+	}
+    ]
 }
+
+
+
+
+
+
+
+
+
+
