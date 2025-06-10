@@ -38,7 +38,7 @@ self.addEventListener('fetch', (event) => {
 
 
 
-
+/*
 function cacheFirstWithRefresh(request){
     
     var  requestTocache = request.clone();
@@ -68,4 +68,50 @@ function cacheFirstWithRefresh(request){
 
 	});
     
+}
+
+*/
+
+async function cacheFirstWithRefresh(request) {
+  // Try to get from cache first
+  const cachedResponse = await caches.match(request);
+  
+  // If we have a cached version, return it immediately
+  if (cachedResponse) {
+    // But also update cache in background
+    updateCache(request);
+    return cachedResponse;
+  }
+  
+  // Otherwise try network
+  try {
+    const networkResponse = await fetch(request);
+    
+    // Cache the response if valid
+    if (networkResponse.ok) {
+      const cache = await caches.open(CACHE_NAME);
+      await cache.put(request, networkResponse.clone());
+    }
+    
+    return networkResponse;
+  } catch (error) {
+    // If offline and HTML request, return offline page
+    if (request.headers.get('accept').includes('text/html')) {
+      return caches.match('offline');
+    }
+    throw error;
+  }
+}
+
+// Helper function to update cache in background
+async function updateCache(request) {
+  try {
+    const networkResponse = await fetch(request);
+    if (networkResponse.ok) {
+      const cache = await caches.open(CACHE_NAME);
+      await cache.put(request, networkResponse.clone());
+    }
+  } catch (error) {
+    // Silent fail - we're offline
+  }
 }
