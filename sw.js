@@ -32,7 +32,7 @@ self.addEventListener("message", (event) => {
 
 self.addEventListener('fetch', (event) => {
     console.log('Fetching:', event.request.url);
-    cacheFirstWithRefresh(event.request);
+    event.respondWith(cacheFirstWithRefresh(event.request));
 
 });
 
